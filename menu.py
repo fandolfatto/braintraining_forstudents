@@ -5,7 +5,9 @@
 #############################
 
 import tkinter as tk
-import subprocess
+import geo01
+import info02
+import info05
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
@@ -13,11 +15,11 @@ albl_image=[None, None, None] # label (with images) array
 a_image=[None, None, None] # images array
 a_title=[None, None, None] # array of title (ex: GEO01)
 
+dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_info_02, "info05": info05.open_window_info_05}
 
 # call other windows (exercices)
 def exercise(event,exer):
-    print(exer)
-    subprocess.Popen(["python", exer+".py"])
+    dict_games[exer](window)
 
 
 #call display_results
@@ -42,7 +44,7 @@ lbl_title = tk.Label(window, text="TRAINING MENU", font=("Arial", 15))
 lbl_title.grid(row=0, column=1,ipady=5, padx=40,pady=40)
 
 # labels creation and positioning
-for ex in range(len(a_exercise)) :
+for ex in range(len(a_exercise)):
     a_title[ex]=tk.Label(window, text=a_exercise[ex], font=("Arial", 15))
     a_title[ex].grid(row=1+2*(ex//3),column=ex % 3 , padx=40,pady=10) # 3 label per row
 

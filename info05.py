@@ -40,7 +40,7 @@ lbl_distance=None #to display the distance between the 2 colors
 #next color
 def next_color(event):
     #random color to choose
-    window.configure(bg=hex_color)
+    window_info05.configure(bg=hex_color)
     entry_response.delete(0,tk.END)
     entry_response.insert(0,"#")
     global rgb
@@ -138,13 +138,13 @@ def test(event):
     nbtrials +=1
     if success:
         nbsuccess += 1
-        window.configure(bg="green")
-        window.update()
+        window_info05.configure(bg="green")
+        window_info05.update()
         time.sleep(1)  # delai 1s
         next_color(event=None)
     else:
-        window.configure(bg="red")
-        window.update()
+        window_info05.configure(bg="red")
+        window_info05.update()
     lbl_result.configure(text=f"{pseudo} Essais réussis : {nbsuccess} / {nbtrials}")
 
 
@@ -200,75 +200,77 @@ def display_timer():
     duration_s=int(duration.total_seconds()) #idem but in seconds (integer)
     #display min:sec (00:13)
     lbl_duration.configure(text="{:02d}".format(int(duration_s /60)) + ":" + "{:02d}".format(duration_s %60))
-    window.after(1000,display_timer) #recommencer après 15 ms
+    window_info05.after(1000, display_timer) #recommencer après 15 ms
 
 
-window = tk.Tk()
-window.title("La couleur perdue")
-window.geometry("1100x900")
+def open_window_info_05(window):
+    global window_info05, lbl_duration, lbl_result, hex_color, start_date, slider_r, slider_g, slider_b, slider_v, entry_response, canvas
+    window_info05 = tk.Toplevel(window)
+    window_info05.title("La couleur perdue")
+    window_info05.geometry("1100x900")
 
-# color définition
-rgb_color = (139, 201, 194)
-hex_color = '#%02x%02x%02x' % rgb_color # translation in hexa
-window.configure(bg=hex_color)
+    # color définition
+    rgb_color = (139, 201, 194)
+    hex_color = '#%02x%02x%02x' % rgb_color # translation in hexa
+    window_info05.configure(bg=hex_color)
 
-# Canvas creation
-lbl_title = tk.Label(window, text=f"{exercise} : La couleur perdue", font=("Arial", 15))
-lbl_title.grid(row=0,column=1, ipady=5, padx=10,pady=10)
+    # Canvas creation
+    lbl_title = tk.Label(window_info05, text=f"{exercise} : La couleur perdue", font=("Arial", 15))
+    lbl_title.grid(row=0,column=1, ipady=5, padx=10,pady=10)
 
-lbl_duration = tk.Label(window, text="0:00", font=("Arial", 15))
-lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
+    lbl_duration = tk.Label(window_info05, text="0:00", font=("Arial", 15))
+    lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
 
-tk.Label(window, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5,sticky='E')
-entry_pseudo = tk.Entry(window, font=("Arial", 15))
-entry_pseudo.grid(row=1, column=1,sticky='W')
+    tk.Label(window_info05, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5, sticky='E')
+    entry_pseudo = tk.Entry(window_info05, font=("Arial", 15))
+    entry_pseudo.grid(row=1, column=1,sticky='W')
 
-lbl_result = tk.Label(window, text=f"Essais réussis : 0/0", font=("Arial", 15))
-lbl_result.grid( row=1, column=2, ipady=5, padx=20,pady=10)
+    lbl_result = tk.Label(window_info05, text=f"Essais réussis : 0/0", font=("Arial", 15))
+    lbl_result.grid( row=1, column=2, ipady=5, padx=20,pady=10)
 
-canvas = tk.Canvas(window, width=l, height=height, bg="#f9d893")
-canvas.grid( row=2, column=0, columnspan=3, ipady=5, padx=20,pady=5)
+    canvas = tk.Canvas(window_info05, width=l, height=height, bg="#f9d893")
+    canvas.grid( row=2, column=0, columnspan=3, ipady=5, padx=20,pady=5)
 
-#frae
-frame_response = tk.Frame(window)
-frame_response.grid( row=3, column=0, columnspan=3, padx=20,pady=10)
-lbl_response =tk.Label(frame_response, text="Couleur en hexa:", font=("Arial", 15))
-lbl_response.grid( row=0, column=0, ipady=5, padx=10,pady=5,sticky='E')
-entry_response = tk.Entry(frame_response,font=("Arial", 15))
-entry_response.grid( row=0, column=1, ipady=5, padx=10,pady=5,sticky='W')
+    #frae
+    frame_response = tk.Frame(window_info05)
+    frame_response.grid( row=3, column=0, columnspan=3, padx=20,pady=10)
+    lbl_response =tk.Label(frame_response, text="Couleur en hexa:", font=("Arial", 15))
+    lbl_response.grid( row=0, column=0, ipady=5, padx=10,pady=5,sticky='E')
+    entry_response = tk.Entry(frame_response,font=("Arial", 15))
+    entry_response.grid( row=0, column=1, ipady=5, padx=10,pady=5,sticky='W')
 
-#sliders
-slider_r = tk.Scale(window, from_=0, to=255, length=600, orient=tk.HORIZONTAL, troughcolor="red", command=sl_r)
-slider_r.set(128)
-slider_r.grid(row=4, column=0, columnspan=3, padx=10, pady=0)
-slider_g = tk.Scale(window, from_=0, to=255,  length=600, orient=tk.HORIZONTAL, troughcolor="green",command=sl_g)
-slider_g.set(128)
-slider_g.grid(row=5,column=0,columnspan=3, padx=10,pady=0)
-slider_b = tk.Scale(window, from_=0, to=255, length=600, orient=tk.HORIZONTAL, troughcolor="blue",command=sl_b)
-slider_b.set(128)
-slider_b.grid(row=6,column=0,columnspan=3, padx=10,pady=0)
-slider_v = tk.Scale(window, from_=0, to=100, length=600, orient=tk.HORIZONTAL, troughcolor=h_color([127,127,127]))
-slider_v.set(128)
-slider_v.grid(row=7,column=0,columnspan=3, padx=10,pady=0)
+    #sliders
+    slider_r = tk.Scale(window_info05, from_=0, to=255, length=600, orient=tk.HORIZONTAL, troughcolor="red", command=sl_r)
+    slider_r.set(128)
+    slider_r.grid(row=4, column=0, columnspan=3, padx=10, pady=0)
+    slider_g = tk.Scale(window_info05, from_=0, to=255, length=600, orient=tk.HORIZONTAL, troughcolor="green", command=sl_g)
+    slider_g.set(128)
+    slider_g.grid(row=5,column=0,columnspan=3, padx=10,pady=0)
+    slider_b = tk.Scale(window_info05, from_=0, to=255, length=600, orient=tk.HORIZONTAL, troughcolor="blue", command=sl_b)
+    slider_b.set(128)
+    slider_b.grid(row=6,column=0,columnspan=3, padx=10,pady=0)
+    slider_v = tk.Scale(window_info05, from_=0, to=100, length=600, orient=tk.HORIZONTAL, troughcolor=h_color([127, 127, 127]))
+    slider_v.set(128)
+    slider_v.grid(row=7,column=0,columnspan=3, padx=10,pady=0)
 
-btn_next =tk.Button(window, text="Suivant", font=("Arial", 15))
-btn_next.grid( row=8, column=1, ipady=5, padx=20,pady=10)
+    btn_next =tk.Button(window_info05, text="Suivant", font=("Arial", 15))
+    btn_next.grid( row=8, column=1, ipady=5, padx=20,pady=10)
 
-btn_finish = tk.Button(window, text="Terminer", font=("Arial", 15))
-btn_finish.grid(row=8, column=2)
+    btn_finish = tk.Button(window_info05, text="Terminer", font=("Arial", 15))
+    btn_finish.grid(row=8, column=2)
 
 
-# first call of next_point
-display_wheel_color()
-next_color(event=None)
-start_date = datetime.datetime.now()
-display_timer()
+    # first call of next_point
+    display_wheel_color()
+    next_color(event=None)
+    start_date = datetime.datetime.now()
+    display_timer()
 
-# Association de la fonction au clic sur le canvas
-btn_next.bind("<Button-1>", next_color)
-entry_response.bind("<Return>", test)
-slider_v.bind("<ButtonRelease-1>", sl_v)
-btn_finish.bind("<Button-1>", save_game)
+    # Association de la fonction au clic sur le canvas
+    btn_next.bind("<Button-1>", next_color)
+    entry_response.bind("<Return>", test)
+    slider_v.bind("<ButtonRelease-1>", sl_v)
+    btn_finish.bind("<Button-1>", save_game)
 
-# main loop
-window.mainloop()
+    # main loop
+    window_info05.mainloop()
