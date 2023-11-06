@@ -76,8 +76,8 @@ def next_point(event):
         canvas.create_line(l/2+i*scale, h/2-10,l/2+i*scale, h/2+10, fill="black")  # on x
         canvas.create_text(l/2+i*scale, h/2+20, text=i, fill="black", font=("Helvetica 15"))
     for i in range(-5,6,5):
-        canvas.create_line(l/2-10, h/2+i*scale,l/2+10, h/2+i*scale, fill="black")  # y
-        canvas.create_text(l/2-20, h/2+i*scale, text=i, fill="black", font=("Helvetica 15"))
+        canvas.create_line(l/2-10, h/2-i*scale,l/2+10, h/2-i*scale, fill="black")  # y
+        canvas.create_text(l/2-20, h/2-i*scale, text=i, fill="black", font=("Helvetica 15"))
 
     # x & y random
     target_x = round(random.uniform(-10, 10),0)
