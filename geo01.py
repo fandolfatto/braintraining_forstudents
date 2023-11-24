@@ -23,6 +23,7 @@ mycircle= None #objet utilisé pour le cercle rouge
 #important data (to save)
 pseudo="Gaston" #provisory pseudo for user
 exercise="GEO01"
+idexercise=1
 nbtrials=0 #number of total trials
 nbsuccess=0 #number of successfull trials
 
@@ -88,11 +89,18 @@ def next_point(event):
 
 
 def save_game(event):
-    # TODO
+    print(start_date)
+    print(duration)
+    print(nbtrials)
+    print(nbsuccess)
+    print(entry_pseudo.get())
+    nickname = entry_pseudo.get()
+    database.save(start_date, duration, nbtrials, nbsuccess, nickname, idexercise)
     print("dans save")
 
 
 def display_timer():
+    global duration
     duration=datetime.datetime.now()-start_date #elapsed time since beginning, in time with decimals
     duration_s=int(duration.total_seconds()) #idem but in seconds (integer)
     #display min:sec (00:13)
@@ -102,7 +110,7 @@ def display_timer():
 
 def open_window_geo_01(window):
     # window = tk.Tk()
-    global window_geo01, hex_color, lbl_title, lbl_duration, lbl_result, lbl_target, canvas, start_date
+    global window_geo01, hex_color, lbl_title, lbl_duration, lbl_result, lbl_target, canvas, start_date, entry_pseudo
     window_geo01 = tk.Toplevel(window)
 
     window_geo01.title("Exercice de géométrie")
@@ -120,7 +128,7 @@ def open_window_geo_01(window):
     lbl_duration = tk.Label(window_geo01, text="0:00", font=("Arial", 15))
     lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
 
-    tk.Label(window_geo01, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5)
+    tk.Label(window_geo01, text="Pseudo : ", font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5)
     entry_pseudo = tk.Entry(window_geo01, font=("Arial", 15))
     entry_pseudo.grid(row=1, column=1)
 

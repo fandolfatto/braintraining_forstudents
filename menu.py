@@ -8,6 +8,7 @@ import tkinter as tk
 import geo01
 import info02
 import info05
+import database
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
@@ -17,6 +18,7 @@ a_title=[None, None, None] # array of title (ex: GEO01)
 
 dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_info_02, "info05": info05.open_window_info_05}
 
+
 # call other windows (exercices)
 def exercise(event,exer):
     dict_games[exer](window)
@@ -24,7 +26,7 @@ def exercise(event,exer):
 
 #call display_results
 def display_result(event):
-    # TODO
+    database.get_result()
     print("display_result")
 
 
